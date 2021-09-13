@@ -7,3 +7,5 @@ Higher Lower is a game about telling if someone has more or less followers than 
 ## Example on the web
 
 [Higher Lower Example](https://www.higherlower.com/ "Higher Lower game online")
+
+I am trying to replicate this in Python.
