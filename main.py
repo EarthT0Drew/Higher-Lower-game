@@ -36,15 +36,19 @@ def startup(is_start):
 def game():
     score = 0
     try_again = False
+    initial_startup = True
 
-    fail = False
-    while not fail:
+    while True:
         clear()
         if not try_again:
             generate_values()
-        startup(False)
+        try_again = False
+        startup(initial_startup)
+        initial_startup = False
+
         vs(False)
-        guess = input(f"Does {b_dict['name']} have a higher or lower number of followers than {a_dict['name']}? H for higher and L for lower: ").lower()
+        guess = input(
+            f"Does {b_dict['name']} have a higher or lower number of followers than {a_dict['name']}? H for higher and L for lower: ").lower()
         if a_dict['follower_count'] > b_dict['follower_count']:
             is_higher = False
         else:
@@ -55,13 +59,16 @@ def game():
         vs(True)
 
         if is_higher and guess in ['higher', 'h'] or not is_higher and guess in ['lower', 'l']:
-            input("Correct! Press [enter] on your keyboard when you are ready to move on.")
+            input(
+                "Correct! Press [enter] on your keyboard when you are ready to move on.")
         elif is_higher and guess in ['l', 'lower'] or not is_higher and guess in ['h', 'higher']:
-            print(f"That was incorrect. Game over. Your final score is {score}")
+            print(
+                f"That was incorrect. Game over. Your final score is {score}")
             return
         else:
             print("That was invalid. Try again")
             sleep(2)
+            try_again = True
 
 
 def vs(show_follower_count_last):
@@ -110,5 +117,4 @@ def vs(show_follower_count_last):
 
 
 generate_values()
-startup(True)
 game()
