@@ -6,24 +6,34 @@ from os import system  # Allows for clear()
 # Allows for viewage of these variables globaly (May clean up in future)
 a_dict = ""
 b_dict = ""
+a_int = None
+b_int = None
+
 
 
 def clear():  # Uses os.system() to create clear() which clears the screen
     system("cls")
 
 
-def generate_values():  # Generates comparison values used in-game
+def generate_values(is_start):  # Generates comparison values used in-game
     global a_dict  # Allows for modifications of these variables
     global b_dict
+    if is_start:
+        a_int = randint(0, 49)  # Generates comparison value for the first one
+        a_dict = data[a_int]  # Finishes defining first comparison value
 
-    a_int = randint(0, 49)  # Generates comparison value for the first one
-    a_dict = data[a_int]  # Finishes defining first comparison value
+        b_int = randint(0, 49)  # Generates comparison value for second one
+        while b_int == a_int:  # Sees if first value is the same as second value, if so, generates new value untill not same
+            b_int = randint(0, 49)
+        b_dict = data[b_int]  # Finishes defining second comparison value
+    else:
+        a_dict = b_dict
+        a_int = b_int
 
-    b_int = randint(0, 49)  # Generates comparison value for second one
-    while b_int == a_int:  # Sees if first value is the same as second value, if so, generates new value untill not same
-        b_int = randint(0, 49)
-    b_dict = data[b_int]  # Finishes defining second comparison value
-
+        b_int = randint(0, 49)  # Generates comparison value for second one
+        while b_int == a_int:  # Sees if first value is the same as second value, if so, generates new value untill not same
+            b_int = randint(0, 49)
+        b_dict = data[b_int]  # Finishes defining second comparison value
 
 def startup(is_start):  # Shows the first few lines of the sceen
     clear()
@@ -42,7 +52,7 @@ def game():
         clear()
         # Generates new values when answer is valid (see more later)
         if not try_again:
-            generate_values()
+            generate_values(initial_startup)
         startup(initial_startup)
         initial_startup = False
 
