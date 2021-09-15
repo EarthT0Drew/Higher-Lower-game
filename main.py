@@ -1,63 +1,68 @@
-from random import randint
-from data import data
-import art
-from os import system
-from time import sleep
+from random import randint  # Imports
+from data import data  # Imports data.py file
+import art  # Imports art.py file
+from os import system  # Allows for clear()
 
+# Allows for viewage of these variables globaly (May clean up in future)
 a_dict = ""
-
 b_dict = ""
 
 
-def clear():
+def clear():  # Uses os.system() to create clear() which clears the screen
     system("cls")
 
 
-def generate_values():
-    global a_dict
+def generate_values():  # Generates comparison values used in-game
+    global a_dict  # Allows for modifications of these variables
     global b_dict
-    a_int = randint(0, 49)
-    a_dict = data[a_int]
 
-    b_int = randint(0, 49)
-    while b_int == a_int:
+    a_int = randint(0, 49)  # Generates comparison value for the first one
+    a_dict = data[a_int]  # Finishes defining first comparison value
+
+    b_int = randint(0, 49)  # Generates comparison value for second one
+    while b_int == a_int:  # Sees if first value is the same as second value, if so, generates new value untill not same
         b_int = randint(0, 49)
-    b_dict = data[b_int]
+    b_dict = data[b_int]  # Finishes defining second comparison value
 
 
-def startup(is_start):
+def startup(is_start):  # Shows the first few lines of the sceen
     clear()
     print(art.logo)
-    if is_start:
+    if is_start:  # Shows 'Welcome to Higher Lower!' when done for first time
         print("Welcome to Higher Lower!", end='')
     print("\n\n", end='')
 
 
 def game():
-    score = 0
+    score = 0  # Initial variables
     try_again = False
     initial_startup = True
 
     while True:
         clear()
+        # Generates new values when answer is valid (see more later)
         if not try_again:
             generate_values()
         try_again = False
         startup(initial_startup)
         initial_startup = False
 
+        # Shows the main comparison screen without follower count for second comparison value
         vs(False)
+
         guess = input(
             f"Does {b_dict['name']} have a higher or lower number of followers than {a_dict['name']}? H for higher and L for lower: ").lower()
-        if a_dict['follower_count'] > b_dict['follower_count']:
+
+        if a_dict['follower_count'] > b_dict['follower_count']:  # Compairs both values
             is_higher = False
         else:
             is_higher = True
 
-        clear()
+        clear()  # Starts new screen that is same except that answer is shown for second value
         startup(False)
         vs(True)
 
+        # Compares guess to answer
         if is_higher and guess in ['higher', 'h'] or not is_higher and guess in ['lower', 'l']:
             score += 1
             input(
@@ -67,8 +72,8 @@ def game():
                 f"That was incorrect. Game over. Your final score is {score}")
             return
         else:
-            print("That was invalid. Try again")
-            sleep(2)
+            input(
+                "That was invalid. Press [enter] on your keyboard to try again")  # Invalid input, does not generate new values
             try_again = True
 
 
