@@ -78,9 +78,9 @@ def game():
 
 
 def vs(show_follower_count_last):
-    spaces = 63
+    spaces = 63  # Describes the number of characters that is between the begining of the sceen and the beginning of the 'vs', and the space between 'vs' and the end of screen
 
-    for index in range(0, spaces):
+    for index in range(0, spaces):  # Shows first row
         print(" ", end='')
     print(art.vs_list[0])
 
@@ -92,7 +92,7 @@ def vs(show_follower_count_last):
         print(" ", end='')
     print(f"Name: {b_dict['name']}")
 
-    print(f"Description: {a_dict['description']}", end='')
+    print(f"Description: {a_dict['description']}", end='')  # Shows second row
     for index in range(0, spaces - len(a_dict['description']) - 13):
         print(" ", end='')
     print(art.vs_list[2], end='')
@@ -100,7 +100,7 @@ def vs(show_follower_count_last):
         print(" ", end='')
     print(f"Description: {b_dict['description']}")
 
-    print(f"Country: {a_dict['country']}", end='')
+    print(f"Country: {a_dict['country']}", end='')  # Shows third row
     for index in range(0, spaces - len(a_dict['country']) - 9):
         print(" ", end='')
     print(art.vs_list[3], end='')
@@ -108,7 +108,7 @@ def vs(show_follower_count_last):
         print(" ", end='')
     print(f"Country: {b_dict['country']}")
 
-    print(f"Followers: {str(a_dict['follower_count'])},000,000", end='')
+    print(f"Followers: {str(a_dict['follower_count'])},000,000", end='')  # Shows fourth row
     for index in range(0, spaces - len(str(a_dict['follower_count'])) - 19):
         print(" ", end='')
     print(art.vs_list[4], end='')
