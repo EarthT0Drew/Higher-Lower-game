@@ -42,7 +42,6 @@ def game():
         clear()
         if not try_again:
             generate_values()
-        try_again = False
         startup(initial_startup)
         initial_startup = False
 
@@ -56,7 +55,12 @@ def game():
 
         clear()
         startup(False)
-        vs(True)
+        if not try_again:
+            vs(True)
+        else:
+            vs(False)
+        try_again = False
+        
 
         if is_higher and guess in ['higher', 'h'] or not is_higher and guess in ['lower', 'l']:
             score += 1
