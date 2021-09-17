@@ -18,6 +18,8 @@ def clear():  # Uses os.system() to create clear() which clears the screen
 def generate_values(is_start):  # Generates comparison values used in-game
     global a_dict  # Allows for modifications of these variables
     global b_dict
+    global a_int
+    global b_int
     if is_start:
         a_int = randint(0, 49)  # Generates comparison value for the first one
         a_dict = data[a_int]  # Finishes defining first comparison value
@@ -50,7 +52,7 @@ def game():
 
     while True:
         clear()
-        # Generates new values when answer is valid (see more later)
+        # Generates new values when answer is valid (see more later) or if new game
         if not try_again:
             generate_values(initial_startup)
         startup(initial_startup)
@@ -136,5 +138,4 @@ def vs(show_follower_count_last):
         print(f"Followers: {str(b_dict['follower_count'])},000,000")
 
 
-generate_values()
 game()
