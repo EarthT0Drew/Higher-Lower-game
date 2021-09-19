@@ -1,4 +1,4 @@
-from random import randint  # Imports
+from random import choice  # Imports
 from data import data  # Imports data.py file
 import art  # Imports art.py file
 from os import system  # Allows for clear()
@@ -10,32 +10,26 @@ a_int = None
 b_int = None
 
 
-
 def clear():  # Uses os.system() to create clear() which clears the screen
     system("cls")
 
 
-def generate_values(is_start):  # Generates comparison values used in-game
+def generate_values(is_start):  # Chooses comparison accounts used in-game
     global a_dict  # Allows for modifications of these variables
     global b_dict
-    global a_int
-    global b_int
-    if is_start:
-        a_int = randint(0, 49)  # Generates comparison value for the first one
-        a_dict = data[a_int]  # Finishes defining first comparison value
 
-        b_int = randint(0, 49)  # Generates comparison value for second one
-        while b_int == a_int:  # Sees if first value is the same as second value, if so, generates new value untill not same
-            b_int = randint(0, 49)
-        b_dict = data[b_int]  # Finishes defining second comparison value
+    if is_start:  # Finds if new game or if is new round
+        a_dict = choice(data)  # Chooses first account
+
+        b_dict = choice(data)  # Chooses second account
+        while b_dict == a_dict:  # Sees if first value is the same as second value, if so, chooses new account untill not same
+            b_dict = choice(data)
     else:
-        a_dict = b_dict
-        a_int = b_int
+        a_dict = b_dict  # If new round, makes first account the second account, a and chooses a new account for second
 
-        b_int = randint(0, 49)  # Generates comparison value for second one
-        while b_int == a_int:  # Sees if first value is the same as second value, if so, generates new value untill not same
-            b_int = randint(0, 49)
-        b_dict = data[b_int]  # Finishes defining second comparison value
+        while b_dict == a_dict:
+            b_dict = choice(data)
+
 
 def startup(is_start):  # Shows the first few lines of the sceen
     clear()
@@ -52,31 +46,30 @@ def game():
 
     while True:
         clear()
-        # Generates new values when answer is valid (see more later) or if new game
+        # Chooses new accounts when answer is valid (see more later) or if new game
         if not try_again:
             generate_values(initial_startup)
         startup(initial_startup)
         initial_startup = False
 
-        # Shows the main comparison screen without follower count for second comparison value
+        # Shows the main comparison screen without follower count for second account
         vs(False)
 
         guess = input(
             f"Does {b_dict['name']} have a higher or lower number of followers than {a_dict['name']}? H for higher and L for lower: ").lower()
 
-        if a_dict['follower_count'] > b_dict['follower_count']:  # Compairs both values
+        if a_dict['follower_count'] > b_dict['follower_count']:  # Compairs both accounts
             is_higher = False
         else:
             is_higher = True
 
-        clear()  # Starts new screen that is same except that answer is shown for second value
+        clear()  # Starts new screen that is same except that answer is shown for second account
         startup(False)
         if not try_again:
             vs(True)
         else:
             vs(False)
         try_again = False
-        
 
         # Compares guess to answer
         if is_higher and guess in ['higher', 'h'] or not is_higher and guess in ['lower', 'l']:
@@ -89,7 +82,7 @@ def game():
             return
         else:
             input(
-                "That was invalid. Press [enter] on your keyboard to try again")  # Invalid input, does not generate new values
+                "That was invalid. Press [enter] on your keyboard to try again")  # Invalid input, does not choose new account
             try_again = True
 
 
@@ -124,7 +117,8 @@ def vs(show_follower_count_last):
         print(" ", end='')
     print(f"Country: {b_dict['country']}")
 
-    print(f"Followers: {str(a_dict['follower_count'])},000,000", end='')  # Shows fourth row
+    # Shows fourth row
+    print(f"Followers: {str(a_dict['follower_count'])},000,000", end='')
     for index in range(0, spaces - len(str(a_dict['follower_count'])) - 19):
         print(" ", end='')
     print(art.vs_list[4], end='')
