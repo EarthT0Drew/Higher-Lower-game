@@ -75,7 +75,7 @@ def game():
         if is_higher and guess in ['higher', 'h'] or not is_higher and guess in ['lower', 'l']:
             score += 1
             input(
-                "Correct! Press [enter] on your keyboard when you are ready to move on.")
+                f"Correct! Current score: {score}. Press [enter] on your keyboard when you are ready to move on.")
         elif is_higher and guess in ['l', 'lower'] or not is_higher and guess in ['h', 'higher']:
             print(
                 f"That was incorrect. Game over. Your final score is {score}")
